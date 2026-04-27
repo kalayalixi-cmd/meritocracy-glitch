@@ -1,164 +1,303 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Meritocracy Glitch</title>
-    <link rel="stylesheet" href="globals.css" />
-    <link rel="stylesheet" href="styleguide.css" />
-    <link rel="stylesheet" href="style.css" />
-    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.88/build/spline-viewer.js"></script>
-    <style>
-        /* 基础状态管理 */
-        .page-container { display: none; width: 100vw; height: 100vh; overflow: hidden; }
-        .active { display: block !important; }
-        .hidden { display: none !important; opacity: 0; transition: opacity 2s; }
-        
-        /* 确保 3D 场景在最底层 */
-        spline-viewer {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 1;
-        }
-        /* 确保 UI 在 3D 之上 */
-        section, header { position: relative; z-index: 10; pointer-events: none; }
-        a, button, .initiate-workflow { pointer-events: auto; }
-        
-        /* 焦虑视觉特效 */
-        .anxiety-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, transparent 20%, rgba(255,0,0,0.3) 100%);
-            opacity: 0; pointer-events: none; z-index: 5; transition: opacity 0.5s;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Meritocracy Glitch</title>
+
+  <link rel="stylesheet" href="./globals.css" />
+  <link rel="stylesheet" href="./styleguide.css" />
+  <link rel="stylesheet" href="./style.css" />
+
+  <script
+    type="module"
+    src="https://unpkg.com/@splinetool/viewer@1.12.88/build/spline-viewer.js">
+  </script>
 </head>
 <body>
+  <!-- PAGE 1: LOGIN -->
+  <main id="page-login" class="page active">
+    <div class="design-canvas">
+      <img class="page-bg" src="./img/page1-login.png" alt="Login page background" />
 
-    <main id="page-login" class="login page-container active">
-        <div class="div">
-            <header class="navigation-bar">
-                <div class="frame">
-                    <img class="subtract" src="img/subtract.svg" alt="" />
-                    <div class="meritocracy-glitch">MERITOCRACY GLITCH</div>
-                </div>
-                <nav class="frame-2">
-                    <a href="javascript:void(0)" onclick="showPage('page-purpose')" class="text-wrapper">PURPOSE_</a>
-                    <div class="text-wrapper">QUIZ_</div>
-                </nav>
-            </header>
-            <section class="content">
-                <h1 class="system-login">SYSTEM LOGIN</h1>
-                <div class="input-fields">
-                    <div class="field">WORKER ID: 7F3A-22C9-AX91</div>
-                    <div class="field">BEHAVIOUR INDEX: 0.92 / 1.00</div>
-                    <div class="field">COMPLIANCE TOKEN: VALID</div>
-                </div>
-                <button class="initiate-workflow" onclick="startWorkflow()">INITIATE WORKFLOW</button>
-                <div class="mandatory">MANDATORY COMPLIANCE</div>
-            </section>
+      <button
+        class="hotspot hotspot-purpose-top"
+        onclick="showPage('page-purpose')"
+        aria-label="Open purpose">
+      </button>
+
+      <button
+        class="hotspot hotspot-quiz-top"
+        onclick="alert('Quiz page not implemented in this version.')"
+        aria-label="Quiz">
+      </button>
+
+      <button
+        class="hotspot hotspot-login"
+        onclick="startExperience()"
+        aria-label="Initiate workflow">
+      </button>
+    </div>
+  </main>
+
+  <!-- PAGE PURPOSE -->
+  <main id="page-purpose" class="page">
+    <div class="design-canvas">
+      <img class="page-bg" src="./img/page1-purpose.png" alt="Purpose page background" />
+
+      <button
+        class="hotspot hotspot-purpose-back"
+        onclick="showPage('page-login')"
+        aria-label="Back to login">
+      </button>
+    </div>
+  </main>
+
+  <!-- PAGE 2: ANXIETY -->
+  <main id="page-anxiety" class="page">
+    <div class="design-canvas">
+      <div id="anxiety-spline-window">
+        <spline-viewer
+          id="anxiety-spline"
+          loading-anim-type="spinner-small-dark"
+          url="https://prod.spline.design/lSshTXEULNYYXH4z/scene.splinecode">
+        </spline-viewer>
+      </div>
+
+      <section id="ui-anxiety" class="ui-layer active-ui">
+        <img class="page-bg ui-image" src="./img/page2-anxiety-scene.png" alt="Anxiety UI" />
+
+        <div id="overlay-add1" class="overlay hidden">
+          <img class="page-bg overlay-img" src="./img/page2-anxiety-scene-add1.png" alt="Anxiety overlay 1" />
         </div>
-    </main>
 
-    <main id="page-purpose" class="purpose page-container">
-        <div class="div">
-            <header class="navigation-bar">
-                <div class="frame"><div class="meritocracy-glitch">MERITOCRACY GLITCH</div></div>
-                <nav class="frame-2">
-                    <a href="javascript:void(0)" onclick="closePurpose()" class="text-wrapper">BACK_</a>
-                </nav>
-            </header>
-            <section class="purpose-text">
-                <p>UNDER THE SETTING OF "DATA-DAOISM: 2077", THIS OPPRESSION IS MOSTLY PSYCHOLOGICAL AND ALGORITHMIC...</p>
-                <p>CORE MECHANISM: "WU WEI" (INACTION) AS A FORM OF RESISTANCE.</p>
-            </section>
+        <div id="overlay-add2" class="overlay hidden">
+          <img class="page-bg overlay-img" src="./img/page2-anxiety-scene-add2.png" alt="Anxiety overlay 2" />
         </div>
-    </main>
 
-    <main id="page-anxiety" class="anxiety-scene page-container">
-        <div class="anxiety-overlay"></div>
-        
-        <spline-viewer url="https://prod.spline.design/lSshTXEULNYYXH4z/scene.splinecode"></spline-viewer>
+        <div id="overlay-add3" class="overlay hidden">
+          <img class="page-bg overlay-img" src="./img/page2-anxiety-scene-add3.png" alt="Anxiety overlay 3" />
+        </div>
 
-        <section class="anxiety-UI">
-            <header class="navigation-bar">
-                <div class="frame-11"><div class="meritocracy-glitch">MERITOCRACY GLITCH</div></div>
-            </header>
-            <div class="notice">
-                <p class="quickly-scroll-the">QUICKLY SCROLL TO COMPLETE THE KPI.</p>
-            </div>
-            </section>
+        <div id="overlay-error" class="overlay hidden">
+          <img class="page-bg overlay-img" src="./img/page2-anxiety-scene-error.png" alt="Error overlay" />
+        </div>
 
-        <section class="comfort-UI" style="display: none; opacity: 0;">
-            <div class="move-the-mouse-to">
-                <p class="p">-MOVE THE MOUSE TO ELIMINATE PIXEL PARTICLES-</p>
-            </div>
-        </section>
+        <button
+          class="hotspot hotspot-purpose-top"
+          onclick="showPage('page-purpose')"
+          aria-label="Open purpose">
+        </button>
 
-        <section class="void-UI" style="display: none; opacity: 0;">
-            <p class="you-are-disconnected">YOU ARE DISCONNECTED. YOU ARE FREE.</p>
-        </section>
-    </main>
+        <button
+          class="hotspot hotspot-quiz-top"
+          onclick="alert('Quiz page not implemented in this version.')"
+          aria-label="Quiz">
+        </button>
+      </section>
+    </div>
+  </main>
 
-    <script type="module">
-        let currentPage = 'page-login';
-        let anxietyLevel = 0;
-        let wuWeiTimer;
-        const viewer = document.querySelector('spline-viewer');
+  <!-- PAGE 3: COMFORT -->
+  <main id="page-comfort" class="page">
+    <div class="design-canvas">
+      <div id="comfort-spline-fullscreen">
+        <spline-viewer
+          id="comfort-spline"
+          loading-anim-type="spinner-small-dark"
+          url="https://prod.spline.design/Wnp9jX4BAzSUkXES/scene.splinecode">
+        </spline-viewer>
+      </div>
 
-        // 页面切换逻辑
-        window.showPage = (pageId) => {
-            document.querySelectorAll('.page-container').forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-        };
+      <section id="ui-comfort" class="ui-layer active-ui">
+        <img class="page-bg ui-image" src="./img/page3-comfort-scene.png" alt="Comfort UI" />
 
-        window.closePurpose = () => showPage(currentPage);
+        <div id="particle-layer">
+          <div class="particle p1"></div>
+          <div class="particle p2"></div>
+          <div class="particle p3"></div>
+          <div class="particle p4"></div>
+          <div class="particle p5"></div>
+          <div class="particle p6"></div>
+          <div class="particle p7"></div>
+          <div class="particle p8"></div>
+          <div class="particle p9"></div>
+          <div class="particle p10"></div>
+          <div class="particle p11"></div>
+          <div class="particle p12"></div>
+        </div>
+      </section>
+    </div>
+  </main>
 
-        window.startWorkflow = () => {
-            currentPage = 'page-anxiety';
-            showPage('page-anxiety');
-            console.log("进入工作流：系统监控启动");
-        };
+  <!-- PAGE 4: VOID -->
+  <main id="page-void" class="page">
+    <div class="design-canvas">
+      <div id="void-spline-fullscreen">
+        <spline-viewer
+          id="void-spline"
+          loading-anim-type="spinner-small-dark"
+          url="https://prod.spline.design/Wnp9jX4BAzSUkXES/scene.splinecode">
+        </spline-viewer>
+      </div>
 
-        // 核心：“无为”与反直觉交互逻辑 [cite: 35-36, 124-126]
-        window.addEventListener('wheel', (e) => {
-            if (currentPage !== 'page-anxiety') return;
+      <section id="ui-void" class="ui-layer active-ui">
+        <img class="page-bg ui-image" src="./img/page4-void.png" alt="Void UI" />
 
-            // 只要在滚动，说明在“功绩系统”中挣扎，重置觉醒计时器
-            clearTimeout(wuWeiTimer);
-            
-            // 模拟视觉压迫感增加
-            anxietyLevel = Math.min(1, anxietyLevel + 0.05);
-            document.querySelector('.anxiety-overlay').style.opacity = anxietyLevel;
+        <button
+          class="hotspot hotspot-exit"
+          onclick="exitToLogin()"
+          aria-label="Exit to login">
+        </button>
+      </section>
+    </div>
+  </main>
 
-            // 启动“无为”计时：2 秒不操作触发觉醒
-            wuWeiTimer = setTimeout(() => {
-                triggerAwakening();
-            }, 2000);
-        });
+  <script>
+    let currentPage = "page-login";
+    let idleTimer = null;
+    let comfortParticlesRemaining = 12;
 
-        function triggerAwakening() {
-            if (viewer && viewer.runtime) {
-                console.log("检测到无为：触发鹏之觉醒转场");
-                
-                // 1. 调用你设置的变量：鹏起飞 + 相机转场 
-                viewer.runtime.setVariable('startAwakening', true);
+    // slower anxiety progression
+    let scrollProgress = 0;
+    let lastWheelTime = 0;
+    let decayTimer = null;
 
-                // 2. UI 渐隐切换
-                const anxietyUI = document.querySelector('.anxiety-UI');
-                const comfortUI = document.querySelector('.comfort-UI');
-                
-                anxietyUI.style.transition = "opacity 2s";
-                anxietyUI.style.opacity = "0";
-                
-                setTimeout(() => {
-                    anxietyUI.style.display = "none";
-                    comfortUI.style.display = "block";
-                    setTimeout(() => comfortUI.style.opacity = "1", 50);
-                    document.querySelector('.anxiety-overlay').style.opacity = 0;
-                }, 2000);
-            }
+    const IDLE_TIME = 5000;
+    const COMFORT_SWITCH_DELAY = 2500;
+
+    const overlayAdd1 = document.getElementById("overlay-add1");
+    const overlayAdd2 = document.getElementById("overlay-add2");
+    const overlayAdd3 = document.getElementById("overlay-add3");
+    const overlayError = document.getElementById("overlay-error");
+
+    function showPage(pageId) {
+      document.querySelectorAll(".page").forEach((page) => {
+        page.classList.remove("active");
+      });
+
+      const next = document.getElementById(pageId);
+      if (next) next.classList.add("active");
+
+      currentPage = pageId;
+    }
+
+    function resetAnxietyOverlays() {
+      overlayAdd1.classList.add("hidden");
+      overlayAdd2.classList.add("hidden");
+      overlayAdd3.classList.add("hidden");
+      overlayError.classList.add("hidden");
+    }
+
+    function updateAnxietyOverlays() {
+      if (scrollProgress >= 30) overlayAdd1.classList.remove("hidden");
+      if (scrollProgress >= 60) overlayAdd2.classList.remove("hidden");
+      if (scrollProgress >= 90) overlayAdd3.classList.remove("hidden");
+      if (scrollProgress >= 120) overlayError.classList.remove("hidden");
+    }
+
+    function startExperience() {
+      scrollProgress = 0;
+      comfortParticlesRemaining = 12;
+
+      clearTimeout(idleTimer);
+      clearTimeout(decayTimer);
+      resetAnxietyOverlays();
+
+      document.querySelectorAll(".particle").forEach((p) => {
+        p.classList.remove("gone");
+      });
+
+      showPage("page-anxiety");
+    }
+
+    function exitToLogin() {
+      clearTimeout(idleTimer);
+      clearTimeout(decayTimer);
+      showPage("page-login");
+    }
+
+    function scheduleDecay() {
+      clearTimeout(decayTimer);
+
+      decayTimer = setTimeout(() => {
+        // 停下后不清零，只是稍微回落一点点，保留之前的累积感
+        scrollProgress = Math.max(0, scrollProgress - 6);
+      }, 1200);
+    }
+
+    window.addEventListener(
+      "wheel",
+      (e) => {
+        if (currentPage !== "page-anxiety") return;
+
+        clearTimeout(idleTimer);
+
+        const now = Date.now();
+        const gap = now - lastWheelTime;
+        lastWheelTime = now;
+
+        // 滚动越连续，涨得稍微多一点；但总体非常慢
+        let gain = 2.2;
+        if (gap < 120) gain = 3.2;
+        else if (gap < 220) gain = 2.6;
+
+        // 大幅滚轮稍微再加一点
+        const delta = Math.abs(e.deltaY);
+        if (delta > 120) gain += 0.6;
+
+        scrollProgress = Math.min(140, scrollProgress + gain);
+        updateAnxietyOverlays();
+        scheduleDecay();
+
+        idleTimer = setTimeout(() => {
+          setTimeout(() => {
+            showPage("page-comfort");
+          }, COMFORT_SWITCH_DELAY);
+        }, IDLE_TIME);
+      },
+      { passive: true }
+    );
+
+    function removeOneParticle(x, y) {
+      if (currentPage !== "page-comfort") return;
+
+      const particles = Array.from(
+        document.querySelectorAll(".particle:not(.gone)")
+      );
+
+      if (!particles.length) return;
+
+      let closest = particles[0];
+      let closestDistance = Infinity;
+
+      particles.forEach((p) => {
+        const rect = p.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dist = Math.hypot(cx - x, cy - y);
+
+        if (dist < closestDistance) {
+          closestDistance = dist;
+          closest = p;
         }
-    </script>
+      });
+
+      if (closest && closestDistance < 220) {
+        closest.classList.add("gone");
+        comfortParticlesRemaining -= 1;
+      }
+
+      if (comfortParticlesRemaining <= 0) {
+        setTimeout(() => {
+          showPage("page-void");
+        }, 1800);
+      }
+    }
+
+    window.addEventListener("mousemove", (e) => {
+      removeOneParticle(e.clientX, e.clientY);
+    });
+  </script>
 </body>
 </html>
