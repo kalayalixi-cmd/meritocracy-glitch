@@ -1,0 +1,147 @@
+./* ============================================================
+   1. LOGIN PAGE STYLES (ID: #page-login)
+   ============================================================ */
+#page-login.login {
+  background-color: #08004f;
+  overflow: hidden;
+  width: 100%;
+  min-width: 100%;
+  min-height: 100vh;
+  position: relative;
+}
+
+#page-login .group {
+  position: absolute;
+  top: -207px;
+  left: -98px;
+  width: 1818px;
+  height: 1637px;
+}
+
+#page-login .ellipse {
+  top: 811px;
+  left: 0;
+  width: 826px;
+  height: 826px;
+  background-color: #e63b574c;
+  border-radius: 413px;
+  position: absolute;
+  filter: blur(150px);
+}
+
+/* ... 保持所有 .login 样式，仅将前缀替换为 #page-login ... */
+#page-login .system-login {
+  display: flex;
+  flex-direction: column;
+  width: 360px;
+  align-items: center;
+  gap: 24px;
+  position: absolute;
+  top: calc(50% - 151px);
+  left: calc(50% - 180px); /* 微调对齐 */
+}
+
+#page-login .initiate-workflow {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  text-shadow: 0px 0px 10px #c91f3b;
+  font-family: "Aldrich", Helvetica;
+  color: #f7f4ff;
+  font-size: 32px;
+}
+
+/* ============================================================
+   2. PURPOSE PAGE STYLES (ID: #page-purpose)
+   ============================================================ */
+#page-purpose.purpose {
+  background-color: #08004f;
+  overflow: hidden;
+  width: 100%;
+  min-width: 1440px;
+  min-height: 100vh;
+  position: relative;
+}
+
+#page-purpose .frame-3 {
+  display: flex;
+  flex-direction: column;
+  width: 597px;
+  align-items: center;
+  gap: 48px;
+  position: absolute;
+  top: calc(50% - 176px);
+  left: calc(50% - 298px);
+}
+
+#page-purpose .back {
+  text-decoration: underline;
+  cursor: pointer;
+  color: #d7d2f3;
+}
+
+/* ============================================================
+   3. ANXIETY / COMFORT / VOID SCENE (ID: #page-anxiety)
+   ============================================================ */
+#page-anxiety.anxiety-scene {
+  background-color: #08004f;
+  overflow: hidden;
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* 核心：确保 Spline 在背景层 */
+#page-anxiety spline-viewer {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 1;
+}
+
+/* 焦虑态 UI：压迫感层级 */
+#page-anxiety .anxiety-UI {
+  position: absolute;
+  z-index: 10;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none; /* 让点击穿透到 3D 场景 */
+}
+
+#page-anxiety .anxiety-UI * { pointer-events: auto; }
+
+#page-anxiety .KPI-bar {
+  box-shadow: 0px 0px 20px #e63b57; /* 增强 KPI 警告感 */
+}
+
+/* 错误弹窗动画基础状态 */
+#page-anxiety .element-ERROR, 
+#page-anxiety .element-ERROR-2, 
+#page-anxiety .element-ERROR-3, 
+#page-anxiety .element-ERROR-4 {
+  transition: opacity 0.3s ease-in;
+}
+
+/* 舒适态粒子 UI */
+#page-anxiety .comfort-UI {
+  position: absolute;
+  z-index: 20;
+  width: 100%; height: 100%;
+  transition: opacity 2s;
+}
+
+#page-anxiety .particles div {
+  transition: opacity 0.5s; /* 为“无为”清除粒子准备 [cite: 164, 490] */
+}
+
+/* 虚空态 UI */
+#page-anxiety .void-UI {
+  position: absolute;
+  z-index: 30;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f7f4ff; /* 觉醒后的极简留白 [cite: 410] */
+}
